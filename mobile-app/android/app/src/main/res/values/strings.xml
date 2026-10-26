@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Set when the SOS accessibility feature is enabled by the user; the
+         service is a no-op until then and this is the only string change. -->
+    <string name="zeroui_accessibility_enabled">Zero UI SOS gesture is on — pressing the volume-down button three times quickly triggers the emergency flow</string>
+
+    <!-- Accessibility-service listing (Settings → Accessibility → Zero UI). -->
+    <string name="sos_accessibility_summary">Triple volume-down SOS trigger</string>
+    <string name="sos_accessibility_description">Lets Zero UI detect the SOS gesture (pressing the volume-down button three times quickly) even when the app is in the background or the screen is locked, so the emergency flow can start without touching the screen. The service only listens for button presses — it cannot read the screen, notifications, or anything you type, and it cannot tap or control the phone for you.</string>
+</resources>

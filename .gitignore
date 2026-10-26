@@ -1,18 +1,69 @@
-# Python
-__pycache__/
-*.pyc
+﻿# Python environments
 venv/
-.env
+.venv/
+env/
 
-# Database
-*.db
+# Python caches and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+service-account*.json
+
+# Flutter generated files
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# Android generated files and local configuration
+.gradle/
+local.properties
+captures/
+*.keystore
+*.jks
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Node dependencies
+node_modules/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
 
 # OS files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Node (if any later)
-node_modules/
+# Runtime data and emergency recordings
+backend/data/audio/
+backend/data/*.db
+backend/data/*.db-shm
+backend/data/*.db-wal
+backend/data/stale_pin_backup_user_001.txt
 
-# Logs
-*.log
+# Runtime data and emergency recordings
+backend/data/audio/
+backend/data/*.db
+backend/data/*.db-shm
+backend/data/*.db-wal
+backend/data/stale_pin_backup_user_001.txt

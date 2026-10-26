@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,13 +55,43 @@
                             <circle class="countdown-bg" cx="60" cy="60" r="52"></circle>
                             <circle class="countdown-progress" id="countdownCircle" cx="60" cy="60" r="52"></circle>
                         </svg>
-                        <div class="countdown-number" id="countdownNumber">8</div>
+                        <div class="countdown-number" id="countdownNumber">30</div>
                     </div>
                     <div class="mic-indicator" id="micIndicator">
                         <span class="mic-pulse"></span>
                         <span>🎤 Listening...</span>
                     </div>
-                    <p class="verify-hint">Say "I'm okay" or tap the button below</p>
+                    <p class="verify-hint">Tap "I'm Okay" and enter your safety PIN</p>
+                </div>
+
+                <!-- ── PIN OVERLAY ── -->
+                <div class="pin-overlay" id="pinOverlay">
+                    <div class="pin-card">
+                        <div class="pin-lock-icon">🔐</div>
+                        <h3 class="pin-title">Enter Safety PIN</h3>
+                        <p class="pin-subtitle">Verify your identity to cancel the alert</p>
+                        <div class="pin-dots-row">
+                            <span class="pin-dot" id="pinDot0"></span>
+                            <span class="pin-dot" id="pinDot1"></span>
+                            <span class="pin-dot" id="pinDot2"></span>
+                            <span class="pin-dot" id="pinDot3"></span>
+                        </div>
+                        <div class="pin-error" id="pinError">Wrong PIN — try again</div>
+                        <div class="pin-grid">
+                            <button class="pin-key" onclick="pinInput('1')">1</button>
+                            <button class="pin-key" onclick="pinInput('2')">2</button>
+                            <button class="pin-key" onclick="pinInput('3')">3</button>
+                            <button class="pin-key" onclick="pinInput('4')">4</button>
+                            <button class="pin-key" onclick="pinInput('5')">5</button>
+                            <button class="pin-key" onclick="pinInput('6')">6</button>
+                            <button class="pin-key" onclick="pinInput('7')">7</button>
+                            <button class="pin-key" onclick="pinInput('8')">8</button>
+                            <button class="pin-key" onclick="pinInput('9')">9</button>
+                            <button class="pin-key pin-key-cancel" onclick="pinCancel()">✕</button>
+                            <button class="pin-key" onclick="pinInput('0')">0</button>
+                            <button class="pin-key pin-key-back" onclick="pinBackspace()">⌫</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ── EMERGENCY MODE ── -->
@@ -104,12 +134,29 @@
 
         <!-- ─── CONTROL PANEL ─── -->
         <div class="control-panel">
+            <div class="theme-toggle-row">
+                <span class="theme-toggle-label">🌓 Theme</span>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <span class="theme-toggle-thumb" id="themeThumb">🌙</span>
+                </button>
+            </div>
             <h3 class="panel-title">🎮 Simulation Controls</h3>
             <p class="panel-subtitle">Use these to simulate real-world events</p>
 
             <div class="control-group">
                 <label class="control-label" for="userId">User ID</label>
                 <input type="text" class="control-input" id="userId" value="user_001" placeholder="Enter user ID">
+
+                <label class="control-label" for="simApiBase">Backend URL (blank = this origin)</label>
+                <input type="text" class="control-input" id="simApiBase" placeholder="http://192.168.1.5:8000">
+
+                <label class="control-label" for="simEnrollToken">Enrollment token</label>
+                <input type="password" class="control-input" id="simEnrollToken" placeholder="zeroui-dev-enroll-token">
+                <p class="control-hint" style="font-size: 11px; opacity: 0.6; margin-top: 6px;">
+                    This browser simulator enrolls as a device (X-Device-Token) just like the
+                    Android app. Audio is uploaded as ~1-minute segments; live streaming is a
+                    real-device feature.
+                </p>
             </div>
 
             <div class="control-group">
@@ -124,15 +171,50 @@
                 </button>
             </div>
 
+            <div class="control-group" id="pinSetupGroup">
+                <label class="control-label">Safety PIN</label>
+                <div class="pin-setup-row" id="currentPinRow" style="display: none; margin-bottom: 8px;">
+                    <input type="password" class="control-input pin-setup-input" id="currentPinInput" maxlength="4" placeholder="Current PIN" pattern="[0-9]{4}">
+                </div>
+                <div class="pin-setup-row">
+                    <input type="password" class="control-input pin-setup-input" id="pinInput" maxlength="4" placeholder="New 4-digit PIN" pattern="[0-9]{4}">
+                    <button class="control-btn pin-set-btn" onclick="updatePin()">
+                        <span class="btn-icon">🔐</span>
+                        Set
+                    </button>
+                </div>
+                <p class="pin-hint" id="pinHint">Set a unique 4-digit PIN for the current user</p>
+            </div>
+
             <div class="control-group">
                 <label class="control-label">Responses</label>
                 <button class="control-btn ok-btn" id="btnRespondOk" onclick="respondOk()" disabled>
                     <span class="btn-icon">✅</span>
-                    I'm Okay
+                    I'm Okay (PIN Required)
                 </button>
                 <button class="control-btn resolve-btn" id="btnResolve" onclick="resolveEmergency()" disabled>
                     <span class="btn-icon">🏁</span>
                     Resolve Emergency
+                </button>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">📱 Emergency Contacts</label>
+                <div class="contact-form">
+                    <input type="text" class="control-input" id="contactName" placeholder="Name (e.g. Mom)">
+                    <input type="tel" class="control-input" id="contactPhone" placeholder="Phone (+919876543210)" style="margin-top: 6px;">
+                    <input type="text" class="control-input" id="contactRelation" placeholder="Relationship (optional)" style="margin-top: 6px;">
+                    <button class="control-btn contact-add-btn" onclick="addContact()" style="margin-top: 8px;">
+                        <span class="btn-icon">➕</span>
+                        Add Contact
+                    </button>
+                </div>
+                <div class="contacts-list" id="contactsList">
+                    <!-- Populated by JS -->
+                </div>
+                <button class="control-btn test-sms-btn" id="btnTestSms" onclick="testSms()" style="margin-top: 8px;">
+                    <span class="btn-icon">📤</span>
+                    Send Test SMS
                 </button>
             </div>
 
@@ -145,9 +227,30 @@
         </div>
     </div>
 
+    <script src="device.js"></script>
     <script src="sensors.js"></script>
     <script src="audio.js"></script>
     <script src="emergency.js"></script>
     <script src="app.js"></script>
+    <script>
+        // ─── Theme Toggle ───
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            document.getElementById('themeThumb').textContent = next === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem('zeroui-sim-theme', next);
+        }
+        // Restore saved theme
+        (function() {
+            const saved = localStorage.getItem('zeroui-sim-theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+                const thumb = document.getElementById('themeThumb');
+                if (thumb) thumb.textContent = saved === 'dark' ? '🌙' : '☀️';
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -38,6 +38,186 @@
     --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ─── LIGHT THEME ─── */
+[data-theme="light"] {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.92);
+    --bg-glass: rgba(0, 0, 0, 0.04);
+    --border-glass: rgba(0, 0, 0, 0.1);
+
+    --text-primary: #1a1a2e;
+    --text-secondary: rgba(26, 26, 46, 0.6);
+    --text-dim: rgba(26, 26, 46, 0.35);
+
+    --safe-color: #27ae60;
+    --safe-glow: rgba(39, 174, 96, 0.25);
+    --verify-color: #e67e22;
+    --verify-glow: rgba(230, 126, 34, 0.25);
+    --emergency-color: #c0392b;
+    --emergency-glow: rgba(192, 57, 43, 0.3);
+
+    --accent: #5b4cdb;
+    --accent-glow: rgba(91, 76, 219, 0.25);
+}
+
+[data-theme="light"] body {
+    background: var(--bg-primary);
+}
+
+[data-theme="light"] .phone-frame {
+    background: linear-gradient(145deg, #e0e3e8, #c9cdd4);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.05),
+        0 25px 80px rgba(0, 0, 0, 0.15),
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .phone-notch {
+    background: #c9cdd4;
+}
+
+[data-theme="light"] .phone-notch::before {
+    background: #b0b5be;
+}
+
+[data-theme="light"] .phone-screen {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .phone-home-bar {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .control-panel {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .control-input {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .control-btn {
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .log-container {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .log-entry {
+    color: var(--text-secondary);
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .pin-overlay {
+    background: rgba(240, 242, 245, 0.94);
+}
+
+[data-theme="light"] .pin-key {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .pin-key:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="light"] .pin-dot {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .countdown-bg {
+    stroke: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .sensor-bar {
+    background: linear-gradient(90deg, var(--safe-color), var(--accent));
+}
+
+[data-theme="light"] .contact-card {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .info-row {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ─── THEME TOGGLE ─── */
+.theme-toggle {
+    width: 52px;
+    height: 28px;
+    border-radius: 14px;
+    border: 1px solid var(--border-glass);
+    background: var(--bg-glass);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.theme-toggle-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a1a2e, #2d2d52);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .theme-toggle-thumb {
+    left: 26px;
+    background: linear-gradient(135deg, #f39c12, #f1c40f);
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.35);
+}
+
+.theme-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.theme-toggle-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-primary);
@@ -673,6 +853,304 @@ body {
 .log-entry.warn { color: var(--verify-color); }
 .log-entry.error { color: var(--emergency-color); }
 .log-entry.success { color: var(--safe-color); }
+
+/* ─── PIN OVERLAY ─── */
+.pin-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(6, 6, 10, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.pin-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.pin-card {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px 20px;
+    animation: pinSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pinSlideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pin-lock-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 12px rgba(108, 92, 231, 0.4));
+}
+
+.pin-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.pin-subtitle {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+/* PIN Dots */
+.pin-dots-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 10px;
+    transition: transform 0.1s ease;
+}
+
+.pin-dots-row.shake {
+    animation: pinShake 0.4s ease;
+}
+
+@keyframes pinShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-7px); }
+    80% { transform: translateX(7px); }
+}
+
+.pin-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pin-dot.filled {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+    transform: scale(1.15);
+}
+
+.pin-error {
+    display: none;
+    font-size: 0.72rem;
+    color: var(--emergency-color);
+    margin-bottom: 6px;
+    animation: fadeSlideIn 0.3s ease;
+}
+
+/* PIN Grid */
+.pin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.pin-key {
+    width: 100%;
+    aspect-ratio: 1.5;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pin-key:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.pin-key:active {
+    background: rgba(108, 92, 231, 0.25);
+    border-color: var(--accent);
+    transform: scale(0.95);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.pin-key-cancel {
+    color: var(--emergency-color);
+    font-size: 1.1rem;
+}
+.pin-key-cancel:active {
+    background: rgba(231, 76, 60, 0.2);
+    border-color: var(--emergency-color);
+    box-shadow: 0 0 15px var(--emergency-glow);
+}
+
+.pin-key-back {
+    font-size: 1.3rem;
+}
+
+/* ─── PIN SETUP (Control Panel) ─── */
+.pin-setup-row {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.pin-setup-input {
+    flex: 1;
+    font-size: 1rem !important;
+    letter-spacing: 0.2em;
+    text-align: center;
+}
+
+.pin-set-btn {
+    width: auto !important;
+    padding: 10px 16px !important;
+    margin-bottom: 0 !important;
+    white-space: nowrap;
+    background: rgba(108, 92, 231, 0.1);
+    border-color: rgba(108, 92, 231, 0.25);
+}
+
+.pin-set-btn:hover {
+    background: rgba(108, 92, 231, 0.2) !important;
+    border-color: rgba(108, 92, 231, 0.45) !important;
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.15);
+}
+
+.pin-hint {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+}
+
+/* ─── EMERGENCY CONTACTS ─── */
+.contact-form {
+    margin-bottom: 12px;
+}
+
+.contacts-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.contacts-list::-webkit-scrollbar {
+    width: 3px;
+}
+.contacts-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+
+.no-contacts {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-align: center;
+    padding: 12px;
+    background: var(--bg-glass);
+    border: 1px dashed var(--border-glass);
+    border-radius: var(--radius-sm);
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    margin-bottom: 6px;
+    animation: fadeSlideIn 0.3s ease;
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.contact-phone {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.contact-relation {
+    font-size: 0.65rem;
+    color: var(--accent);
+    margin-top: 2px;
+}
+
+.contact-delete {
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: 50%;
+    background: rgba(231, 76, 60, 0.08);
+    color: var(--emergency-color);
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.contact-delete:hover {
+    background: rgba(231, 76, 60, 0.2);
+    border-color: rgba(231, 76, 60, 0.4);
+    transform: scale(1.1);
+}
+
+.contact-add-btn {
+    background: rgba(46, 204, 113, 0.08);
+    border-color: rgba(46, 204, 113, 0.2);
+}
+.contact-add-btn:hover {
+    background: rgba(46, 204, 113, 0.15) !important;
+    border-color: rgba(46, 204, 113, 0.4) !important;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.1);
+}
+
+.test-sms-btn {
+    background: rgba(52, 152, 219, 0.08);
+    border-color: rgba(52, 152, 219, 0.2);
+}
+.test-sms-btn:hover {
+    background: rgba(52, 152, 219, 0.15) !important;
+    border-color: rgba(52, 152, 219, 0.4) !important;
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.1);
+}
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 860px) {

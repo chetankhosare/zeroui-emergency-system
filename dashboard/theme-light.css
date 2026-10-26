@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Zero UI Dashboard — light theme
+   Loaded after style.css and realtime.css; only overrides the surfaces that
+   need inverting, so the dark theme stays the source of truth.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --stale: hsl(24, 84%, 46%);
+    --stale-bg: hsla(24, 84%, 46%, 0.1);
+    --stale-glow: hsla(24, 84%, 46%, 0.22);
+}
+
+/* ─── LIGHT THEME ─── */
+[data-theme="light"] {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.94);
+    --bg-glass: rgba(0, 0, 0, 0.035);
+    --bg-glass-hover: rgba(0, 0, 0, 0.065);
+    --border-glass: rgba(0, 0, 0, 0.09);
+    --border-active: rgba(0, 0, 0, 0.16);
+
+    --text-primary: #1a1a2e;
+    --text-secondary: rgba(26, 26, 46, 0.6);
+    --text-dim: rgba(26, 26, 46, 0.35);
+
+    --emergency: hsl(0, 72%, 48%);
+    --emergency-bg: hsla(0, 72%, 48%, 0.1);
+    --emergency-glow: hsla(0, 72%, 48%, 0.25);
+
+    --verifying: hsl(30, 85%, 48%);
+    --verifying-bg: hsla(30, 85%, 48%, 0.1);
+    --verifying-glow: hsla(30, 85%, 48%, 0.2);
+
+    --safe: hsl(145, 60%, 38%);
+    --safe-bg: hsla(145, 60%, 38%, 0.1);
+    --safe-glow: hsla(145, 60%, 38%, 0.2);
+
+    --accent: hsl(250, 62%, 54%);
+    --accent-bg: hsla(250, 62%, 54%, 0.08);
+}
+
+[data-theme="light"] body { background: var(--bg-primary); }
+
+[data-theme="light"] .dashboard-header {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .logo-title {
+    background: linear-gradient(135deg, #1a1a2e, rgba(26, 26, 46, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .emergencies-panel {
+    background: var(--bg-secondary);
+    border-right-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .detail-card {
+    background: rgba(255, 255, 255, 0.97);
+    border-left-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .detail-close {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .detail-close:hover { background: rgba(0, 0, 0, 0.08); }
+
+[data-theme="light"] .connection-badge {
+    background: var(--safe-bg);
+    border-color: rgba(46, 160, 80, 0.2);
+    color: var(--safe);
+}
+
+[data-theme="light"] .leaflet-tile-pane { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
+
+/* ─── Panels, chips & tabs ─── */
+[data-theme="light"] .panel,
+[data-theme="light"] .map-panel {
+    background: var(--bg-secondary);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .panel-header { border-bottom-color: rgba(0, 0, 0, 0.08); }
+[data-theme="light"] .stat-chip {
+    background: rgba(0, 0, 0, 0.035);
+    border-color: rgba(0, 0, 0, 0.09);
+}
+[data-theme="light"] .filter-tab { color: var(--text-secondary); }
+[data-theme="light"] .filter-tab:hover { background: rgba(0, 0, 0, 0.055); }
+[data-theme="light"] .filter-tab.active { background: rgba(0, 0, 0, 0.08); color: var(--text-primary); }
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.09);
+}
+[data-theme="light"] .logout-btn,
+[data-theme="light"] .copy-btn,
+[data-theme="light"] .segment-play,
+[data-theme="light"] .alarm-open,
+[data-theme="light"] .alarm-dismiss,
+[data-theme="light"] .detail-id,
+[data-theme="light"] .login-input,
+[data-theme="light"] .note-input,
+[data-theme="light"] .telemetry-item,
+[data-theme="light"] .segment-item {
+    background: rgba(0, 0, 0, 0.035);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+[data-theme="light"] .login-card {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+[data-theme="light"] .login-overlay {
+    background: radial-gradient(circle at 50% 30%, rgba(220, 224, 235, 0.95), rgba(235, 238, 245, 0.98));
+}
+
+/* ─── Cards ─── */
+[data-theme="light"] .emergency-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .emergency-card:hover {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.14);
+}
+[data-theme="light"] .emergency-card.active {
+    background: rgba(37, 99, 235, 0.06);
+    border-color: rgba(37, 99, 235, 0.25);
+}
+[data-theme="light"] .card-digipin { color: var(--text-secondary); }
+[data-theme="light"] .card-id-row code { color: rgba(26, 26, 46, 0.42); }
+[data-theme="light"] .list-meta { border-bottom-color: rgba(0, 0, 0, 0.08); }
+[data-theme="light"] .empty-icon { opacity: 0.7; }
+
+/* ─── Detail panel contents ─── */
+[data-theme="light"] .detail-item {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="light"] .detail-value.digipin {
+    background: rgba(37, 99, 235, 0.08);
+    color: hsl(220, 70%, 40%);
+}
+[data-theme="light"] .detail-value.link { color: hsl(220, 70%, 45%); }
+[data-theme="light"] .tl-desc { color: var(--text-secondary); }
+[data-theme="light"] .detail-timeline::before {
+    background: linear-gradient(to bottom, var(--accent), rgba(0, 0, 0, 0.08));
+}
+[data-theme="light"] .tl-entry { border-bottom-color: rgba(0, 0, 0, 0.07); }
+[data-theme="light"] .action-btn.resolve {
+    background: var(--safe-bg);
+    border-color: rgba(46, 160, 80, 0.25);
+    color: var(--safe);
+}
+[data-theme="light"] .audio-player {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .live-audio-meter { background: rgba(0, 0, 0, 0.07); }
+
+/* ─── Scrollbars ─── */
+[data-theme="light"] .emergencies-list::-webkit-scrollbar-thumb,
+[data-theme="light"] .detail-card::-webkit-scrollbar-thumb,
+[data-theme="light"] .detail-timeline::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.14);
+}
+
+/* ─── Leaflet ─── */
+[data-theme="light"] .leaflet-popup-content-wrapper,
+[data-theme="light"] .leaflet-popup-tip {
+    background: #ffffff;
+    color: var(--text-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+[data-theme="light"] .marker-emergency,
+[data-theme="light"] .marker-verifying,
+[data-theme="light"] .marker-resolved,
+[data-theme="light"] .marker-stale,
+[data-theme="light"] .marker-cancelled {
+    border-color: rgba(255, 255, 255, 0.95);
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Zero UI adaptive launcher icon (Android 8.0+).
+     Foreground = logo artwork on a transparent canvas, safe-zone sized.
+     Background = solid navy sampled from the logo's own background. -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+</adaptive-icon>

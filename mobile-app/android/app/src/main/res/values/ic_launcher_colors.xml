@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive-icon background: navy sampled from the logo's own background
+     (#01091E), kept slightly lifted so the icon holds contrast on both light
+     and dark launchers. -->
+<resources>
+    <color name="ic_launcher_background">#001430</color>
+</resources>

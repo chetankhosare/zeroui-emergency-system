@@ -1,0 +1,136 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ─── Networking (backend REST + WebSocket) ─── -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- ─── Location (GPS for live tracking + DigiPIN) ─── -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Android 10+: required to keep updating location while the app is in the background -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- ─── Microphone (emergency audio: live stream + ~1-minute segments) ─── -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- ─── Foreground service (keeps the emergency session alive) ─── -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+
+    <!-- ─── Supporting permissions ─── -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Ask the user to exempt the app from battery optimisation during setup -->
+    <uses-permission
+        android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        tools:ignore="BatteryLife" />
+
+    <!-- Sensors / hardware are optional: the app degrades gracefully without them -->
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+    <application
+        android:label="Zero UI"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute">
+        <!-- NOTE: usesCleartextTraffic keeps local development (http://LAN-IP:8000)
+             working. Serve the backend over HTTPS and remove this for production. -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Keeps the emergency session (location + audio + uploads) alive while the
+             screen is off or the app is backgrounded. -->
+        <service
+            android:name=".EmergencyForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="location|microphone|dataSync"
+            android:stopWithTask="false" />
+
+        <!-- Native passive fall monitoring so detection works when the app is
+             minimised or the screen is locked. type=specialUse: this is a
+             continuous safety-monitoring task that no other type describes
+             (dataSync would be killed after a 6h/day budget on Android 15+).
+             The exact purpose is declared via PROPERTY_SPECIAL_USE_FGS_SUBTYPE. -->
+        <service
+            android:name=".FallMonitoringService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:stopWithTask="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Continuous accelerometer fall detection for an emergency assistance app; runs while the app is not visible so a fall is detected and reported without user interaction" />
+        </service>
+
+        <!-- SOS accessibility service: observes VOLUME key presses to detect
+             the configured triple-press SOS gesture while the app is
+             backgrounded or the screen is locked (the physical power button is
+             NOT observable by any public Android API on normal apps; volume
+             keys are the closest supported hardware-button trigger). It uses
+             keyEventFiltering only — it never reads screen content or injects
+             actions. Opt-in: the user enables it in Android Settings →
+             Accessibility. -->
+        <service
+            android:name=".SosAccessibilityService"
+            android:exported="true"
+            android:label="Zero UI SOS gesture"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/sos_accessibility_config" />
+        </service>
+
+        <!-- Quick Settings SOS tile: one-tap fallback that hands a trigger into
+             the same shared emergency state machine without needing the
+             accessibility gesture. -->
+        <service
+            android:name=".SosTileService"
+            android:exported="true"
+            android:icon="@android:drawable/ic_menu_call"
+            android:label="Zero UI SOS"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>
